@@ -770,3 +770,81 @@ body {
   .privacy-table { font-size: 11px; }
   .privacy-table th, .privacy-table td { padding: 6px 8px; }
 }
+
+/* --- Victory Close Button --- */
+.victory-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #94a3b8;
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.victory-close:hover {
+  color: #fff;
+  border-color: #fff;
+}
+.victory-box {
+  position: relative; /* needed for absolute close btn */
+}
+
+/* --- Sticky Boss HP Bar --- */
+.sticky-boss {
+  position: fixed;
+  top: 57px; /* just below navbar */
+  left: 0; right: 0;
+  z-index: 99;
+  background: rgba(13,13,26,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 24px;
+  transition: opacity .4s, transform .4s;
+}
+.sticky-boss.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.sticky-boss-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #ef4444;
+  white-space: nowrap;
+}
+.sticky-boss-bar {
+  flex: 1;
+  height: 14px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.sticky-boss-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  transition: width .3s ease, background .3s;
+}
+.sticky-boss-fill.rage { background: linear-gradient(90deg, #f97316, #fb923c); }
+.sticky-boss-fill.rage-red { background: linear-gradient(90deg, #dc2626, #ef4444); }
+.sticky-boss-fill.rage-dead { background: linear-gradient(90deg, #6b7280, #9ca3af); }
+.sticky-boss-hp {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #94a3b8;
+  white-space: nowrap;
+  min-width: 90px;
+  text-align: right;
+}
