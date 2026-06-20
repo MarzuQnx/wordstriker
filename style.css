@@ -800,7 +800,7 @@ body {
 /* --- Sticky Boss HP Bar --- */
 .sticky-boss {
   position: fixed;
-  top: 57px; /* just below navbar */
+  top: 0px; /* just below navbar */
   left: 0; right: 0;
   z-index: 99;
   background: rgba(13,13,26,0.92);
