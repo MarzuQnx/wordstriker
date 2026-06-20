@@ -88,7 +88,7 @@ body {
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
-  padding: 120px 24px 80px;
+  padding: 80px 24px 80px;
 }
 
 .hero-bg {
@@ -121,7 +121,7 @@ body {
 .hero-logo {
   width: 120px;
   height: auto;
-  margin-bottom: 16px;
+  margin-bottom: 36px;
   filter: drop-shadow(0 0 20px rgba(255,215,0,.3));
   image-rendering: pixelated;
 }
