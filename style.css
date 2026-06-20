@@ -258,9 +258,9 @@ body {
   .boss-float {
     opacity: 0.18;
     width: 70vw;
-    max-width: 320px;
+    max-width: 420px;
     right: -40px;
-    top: 80px;
+    top: 50px;
     pointer-events: none;
   }
 }
@@ -800,7 +800,7 @@ body {
 /* --- Sticky Boss HP Bar --- */
 .sticky-boss {
   position: fixed;
-  top: 0px; /* just below navbar */
+  top: 0; /* just below navbar */
   left: 0; right: 0;
   z-index: 99;
   background: rgba(13,13,26,0.92);
