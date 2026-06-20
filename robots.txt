@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wordstriker.marzuqnx.com/sitemap.xml
