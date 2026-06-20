@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Word Striker — Game puzzle kata Nusantara. Susun kata, temukan senjata, kalahkan bos!">
+  <meta name="theme-color" content="#0D0D1A">
+  <meta property="og:title" content="Word Striker">
+  <meta property="og:description" content="Game puzzle kata Nusantara. Satu kata bisa mengubah takdir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dbanie.github.io/wordstriker">
+  <link rel="alternate" hreflang="id" href="https://dbanie.github.io/wordstriker">
+  <link rel="alternate" hreflang="en" href="https://dbanie.github.io/wordstriker/en">
+  <title data-i18n="title">Word Striker — Satu Kata Bisa Mengubah Takdir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="pixelParticles"></canvas>
+  <canvas id="pixelFog"></canvas>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <span class="nav-logo">⬡ WORD STRIKER</span>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#about" data-i18n="nav_about">Tentang</a>
+          <a href="#features" data-i18n="nav_features">Fitur</a>
+          <a href="#screenshots" data-i18n="nav_screenshots">Screenshot</a>
+          <a href="#privacy" data-i18n="nav_privacy">Privasi</a>
+          <a href="#terms">TOS</a>
+        </div>
+        <button class="lang-toggle" id="langToggle" aria-label="Switch language">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg layer layer-back"></div>
+    <div class="hero-glow layer layer-mid"></div>
+    <div class="weapon-discovery">KERIS</div>
+    <img src="boss.png" class="boss-float">
+    <div class="hero-content">
+      <h1 class="hero-title">WORD<br>STRIKER</h1>
+      <p class="hero-tagline" data-i18n="hero_tagline">Satu kata bisa mengubah takdir.</p>
+      <p class="hero-sub" data-i18n="hero_sub">Game puzzle kata Nusantara. Susun kata, temukan senjata rahasia, kalahkan bos!</p>
+      <div class="boss-ui">
+        <div class="boss-label">SI MANIS</div>
+        <div class="boss-hp-bar">
+          <div class="boss-hp-fill" id="bossHpFill"></div>
+        </div>
+        <div id="bossHpText" class="boss-hp-text">1,000,000 HP</div>
+      </div>
+      <div id="bossDialog" class="boss-dialog">"Kau tak akan lolos dari Ancol..."</div>
+      <div class="hero-badges">
+        <a href="#" class="badge boss-cta" data-boss-hp="1.000.000">
+          <span class="cta-icon">⚔️</span>
+          <span class="cta-text">
+            <span class="cta-line1">TANTANG</span>
+            <span class="cta-line2">SI MANIS</span>
+          </span>
+          <span class="cta-hp">HP: 1,000,000</span>
+        </a>
+      </div>
+      <div class="audio-controls">
+        <button id="bgmToggle" class="audio-btn">🔊 BGM ON</button>
+        <a href="https://paypal.me/NAMA_PAYPAL_KAMU" target="_blank" class="support-btn">☕ SUPPORT DEVELOPMENT</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="section-inner">
+      <h2 class="section-title" data-i18n="about_title">APA ITU WORD STRIKER?</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">⚔️</div>
+          <h3>Hidden Combo Discovery</h3>
+          <p data-i18n="about_1">Ratusan senjata tersembunyi menunggu ditemukan — dari keris pusaka hingga nuklir pemusnah.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">👹</div>
+          <h3 data-i18n="about_2_title">Boss Battle</h3>
+          <p data-i18n="about_2">Kalahkan Si Manis, bos mitos Ancol dengan 1.000.000 HP dan 4 skill mematikan.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🧩</div>
+          <h3 data-i18n="about_3_title">4 Layer Combo</h3>
+          <p data-i18n="about_3">Weapon Discovery, Chain, Link &amp; Category — makin kreatif makin dahsyat damagenya!</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🇮🇩</div>
+          <h3 data-i18n="about_4_title">Nuansa Nusantara</h3>
+          <p data-i18n="about_4">Senjata tradisional, tokoh sejarah, alat musik — semua dari Indonesia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section section-dark">
+    <div class="section-inner">
+      <h2 class="section-title" data-i18n="features_title">FITUR GAME</h2>
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="feature-tag" style="background:#ffd70033;color:#ffd700">OMEGA LINK</span>
+          <span data-i18n="feature_1">10 kata berurutan dengan huruf awal sama = damage ×5!</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-tag" style="background:#a855f733;color:#a855f7">MYSTIC COMBO</span>
+          <span data-i18n="feature_2">10 weapon discovery berturut-turut = bonus +100.000 damage!</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-tag" style="background:#22c55e33;color:#22c55e">ACHIEVEMENTS</span>
+          <span data-i18n="feature_3">Koleksi semua kata yang pernah ditemukan, lengkap dengan statistik rarity.</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-tag" style="background:#3b82f633;color:#3b82f6">BOSS SKILLS</span>
+          <span data-i18n="feature_4">Si Manis punya 4 skill: damage reduction, timer drain, regen &amp; rage regen!</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-tag" style="background:#ef444433;color:#ef4444">REWARDED ADS</span>
+          <span data-i18n="feature_5">Nonton iklan = +30 detik waktu. Bantuan saat hampir kalah!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenshots" class="section">
+    <div class="section-inner">
+      <h2 class="section-title" data-i18n="screenshots_title">SCREENSHOT</h2>
+      <div class="phone-showcase">
+        <div class="phone active">
+          <img src="screenshot_01.png" alt="Battle Screen — Word Striker" loading="lazy">
+        </div>
+        <div class="phone">
+          <img src="screenshot_02.png" alt="Achievement Screen — Word Striker" loading="lazy">
+        </div>
+        <div class="phone">
+          <img src="screenshot_03.png" alt="Combo Discovery — Word Striker" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="terms" class="section">
+    <div class="section-inner">
+      <h2 class="section-title">TERMS OF SERVICE</h2>
+      <div class="privacy-content">
+        <h3>Acceptance</h3>
+        <p>By downloading and using Word Striker, you agree to these terms.</p>
+        <h3>License</h3>
+        <p>Word Striker is licensed for personal, non-commercial use.</p>
+        <h3>Advertisements</h3>
+        <p>Rewarded advertisements are optional. No purchase is required to complete the game.</p>
+        <h3>Limitation</h3>
+        <p>The game is provided "as is" without warranties.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" class="section section-dark">
+    <div class="section-inner">
+      <h2 class="section-title" data-i18n="privacy_title">KEBIJAKAN PRIVASI</h2>
+      <div class="privacy-content">
+
+        <h3 data-i18n="privacy_section_data_title">1. Data yang Kami Kumpulkan</h3>
+        <p data-i18n="privacy_section_data">Word Striker <strong>tidak</strong> mengumpulkan, menyimpan, atau membagikan data pribadi. Aplikasi berjalan sepenuhnya offline tanpa pemrosesan server.</p>
+
+        <h3 data-i18n="privacy_section_ads_title">2. Iklan</h3>
+        <p data-i18n="privacy_section_ads">Word Striker menggunakan <strong>Google AdMob</strong> untuk rewarded video ads (opsional — tonton iklan untuk +30 detik). AdMob dapat mengumpulkan device identifiers (Advertising ID) dan data penggunaan sesuai <a href="https://policies.google.com/privacy" target="_blank">Kebijakan Privasi Google</a>. Data ini ditangani sepenuhnya oleh Google, bukan oleh pengembang aplikasi.</p>
+
+        <h3 data-i18n="privacy_section_storage_title">3. Penyimpanan Lokal</h3>
+        <p data-i18n="privacy_section_storage">Aplikasi menggunakan <code>shared_preferences</code> untuk menyimpan:
+          <span lang="id"><br>• Kata-kata yang sudah ditemukan<br>• Total damage akumulasi</span>
+          <span lang="en"><br>• Words you have discovered<br>• Total accumulated damage</span>
+          <br><strong data-i18n="privacy_section_storage_note">Data ini tidak pernah meninggalkan perangkat Anda.</strong>
+        </p>
+
+        <h3 data-i18n="privacy_section_third_title">4. Layanan Pihak Ketiga</h3>
+        <table class="privacy-table">
+          <tr>
+            <th data-i18n="privacy_table_service">Layanan</th>
+            <th data-i18n="privacy_table_purpose">Tujuan</th>
+            <th data-i18n="privacy_table_policy">Kebijakan Privasi</th>
+          </tr>
+          <tr><td>Google AdMob</td><td data-i18n="privacy_table_ads_purpose">Rewarded video ads</td><td><a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></td></tr>
+          <tr><td>Google Fonts</td><td data-i18n="privacy_table_fonts_purpose">Font game (Press Start 2P)</td><td><a href="https://developers.google.com/fonts/faq/privacy" target="_blank">Google Fonts FAQ</a></td></tr>
+        </table>
+
+        <h3 data-i18n="privacy_section_children_title">5. Privasi Anak</h3>
+        <p data-i18n="privacy_section_children">Word Striker tidak dengan sengaja mengumpulkan data dari anak di bawah 13 tahun. Aplikasi tidak memerlukan akun atau informasi pribadi.</p>
+
+        <h3 data-i18n="privacy_section_contact_title">6. Kontak</h3>
+        <p data-i18n="privacy_section_contact">Untuk pertanyaan: <a href="mailto:dbanie@email.com">dbanie@email.com</a></p>
+
+        <p class="privacy-footer" data-i18n="privacy_footer">Kebijakan ini dapat diperbarui. Perubahan akan tercermin di halaman ini.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>⬡ WORD STRIKER &mdash; 2026</p>
+    <p class="footer-small" data-i18n="footer_made">Dibuat dengan ❤️ dari Indonesia untuk dunia.</p>
+    <div class="footer-links">
+      <a href="https://paypal.me/NAMA_PAYPAL_KAMU" target="_blank" class="support-btn">☕ SUPPORT</a>
+    </div>
+  </footer>
+
+  <div id="victoryOverlay" class="victory-overlay">
+    <div class="victory-box">
+      <h1>⚔️ SI MANIS DEFEATED</h1>
+      <p>The battle has ended. Will you continue your journey?</p>
+      <a href="#" class="badge google-play" id="victoryCta">DOWNLOAD NOW</a>
+    </div>
+  </div>
+
+  <div id="comboExplosion"></div>
+  <div id="liveFeed"></div>
+  <div id="toast" class="toast hidden"></div>
+  <div id="legendaryPopup" class="legendary-popup">
+    <div class="legendary-title">⚡ LEGENDARY DISCOVERY</div>
+    <div class="legendary-name">GATOTKACA</div>
+    <div class="legendary-damage">+100000 DAMAGE</div>
+  </div>
+  <audio id="battleBgm" loop preload="auto">
+    <source src="bgm/battle_bgm.wav" type="audio/wav">
+  </audio>
+  <script src="script.js"></script>
+</body>
+</html>
