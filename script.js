@@ -137,6 +137,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
+// --- Victory Close ---
+document.getElementById('victoryClose')?.addEventListener('click', () => {
+  document.getElementById('victoryOverlay').classList.remove('show')
+})
+
+// --- Sticky Boss HP ---
+const stickyBoss = document.getElementById('stickyBoss')
+const stickyHpFill = document.getElementById('stickyHpFill')
+const stickyHpText = document.getElementById('stickyHpText')
+const heroSection = document.querySelector('.hero')
+
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) {
+      stickyBoss.classList.remove('hidden')
+    } else {
+      stickyBoss.classList.add('hidden')
+    }
+  })
+}, { threshold: 0.1 })
+
+if (heroSection) heroObserver.observe(heroSection)
+
+
   // --- Toast ---
   function showToast(msg) {
     const el = document.getElementById('toast')
