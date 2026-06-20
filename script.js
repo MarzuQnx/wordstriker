@@ -93,19 +93,13 @@ function applyLanguage(l) {
   lang = l
   localStorage.setItem('wordstriker_lang', l)
   document.documentElement.lang = l
-
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n
     const text = i18n[l]?.[key]
-    if (text !== undefined) {
-      el.innerHTML = text
-    }
+    if (text !== undefined) el.innerHTML = text
   })
-
   const btn = document.getElementById('langToggle')
   if (btn) btn.textContent = l === 'id' ? 'EN' : 'ID'
-
-  // re-translate meta
   const desc = document.querySelector('meta[name="description"]')
   if (desc) {
     desc.setAttribute('content',
@@ -119,8 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLanguage(lang)
 
   document.getElementById('langToggle')?.addEventListener('click', () => {
-    const next = lang === 'id' ? 'en' : 'id'
-    applyLanguage(next)
+    applyLanguage(lang === 'id' ? 'en' : 'id')
   })
 
   // --- Scroll navbar ---
@@ -136,30 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ticking = true
     }
   })
-
-// --- Victory Close ---
-document.getElementById('victoryClose')?.addEventListener('click', () => {
-  document.getElementById('victoryOverlay').classList.remove('show')
-})
-
-// --- Sticky Boss HP ---
-const stickyBoss = document.getElementById('stickyBoss')
-const stickyHpFill = document.getElementById('stickyHpFill')
-const stickyHpText = document.getElementById('stickyHpText')
-const heroSection = document.querySelector('.hero')
-
-const heroObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) {
-      stickyBoss.classList.remove('hidden')
-    } else {
-      stickyBoss.classList.add('hidden')
-    }
-  })
-}, { threshold: 0.1 })
-
-if (heroSection) heroObserver.observe(heroSection)
-
 
   // --- Toast ---
   function showToast(msg) {
@@ -185,10 +154,9 @@ if (heroSection) heroObserver.observe(heroSection)
   // --- Google Play badge placeholder ---
   document.querySelector('.badge.google-play')?.addEventListener('click', e => {
     e.preventDefault()
-    const msg = lang === 'id'
+    showToast(lang === 'id'
       ? '🔗 Tautan Google Play akan tersedia setelah aplikasi dipublikasikan.'
-      : '🔗 Google Play link will be available once the app is published.'
-    showToast(msg)
+      : '🔗 Google Play link will be available once the app is published.')
   })
 
   // --- Intersection Observer for reveal ---
@@ -219,14 +187,12 @@ if (heroSection) heroObserver.observe(heroSection)
   const canvas = document.getElementById('pixelParticles')
   if (canvas) {
     const ctx = canvas.getContext('2d')
-
     function resizeCanvas() {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
-
     const particles = Array.from({ length: 60 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -234,15 +200,11 @@ if (heroSection) heroObserver.observe(heroSection)
       speed: Math.random() * 0.4 + 0.2,
       alpha: Math.random() * 0.5 + 0.2,
     }))
-
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       particles.forEach(p => {
         p.y -= p.speed
-        if (p.y < -10) {
-          p.y = canvas.height + 10
-          p.x = Math.random() * canvas.width
-        }
+        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width }
         ctx.fillStyle = `rgba(255,215,0,${p.alpha})`
         ctx.fillRect(Math.round(p.x), Math.round(p.y), p.size, p.size)
       })
@@ -330,13 +292,11 @@ if (heroSection) heroObserver.observe(heroSection)
     feedContainer.appendChild(el)
     setTimeout(() => { if (el.parentNode) el.remove() }, 4000)
   }
-
   const discoveries = [
     '⚔️ KERIS', '⚡ RAJA', '👑 MAJAPAHIT',
     '☠️ APOCALYPSE', '🔥 LEGEND', '🗡️ KUJANG',
     '💀 NECROMANCER', '🌀 MYSTIC COMBO'
   ]
-
   setInterval(() => {
     showFeed(discoveries[Math.floor(Math.random() * discoveries.length)])
   }, 6000)
@@ -345,7 +305,6 @@ if (heroSection) heroObserver.observe(heroSection)
   const bgm = document.getElementById('battleBgm')
   const bgmBtn = document.getElementById('bgmToggle')
   let bgmStarted = false
-
   async function startBgm() {
     if (bgmStarted || !bgm) return
     try {
@@ -354,9 +313,7 @@ if (heroSection) heroObserver.observe(heroSection)
       bgmStarted = true
     } catch (_) {}
   }
-
   document.addEventListener('click', startBgm, { once: true })
-
   bgmBtn?.addEventListener('click', async () => {
     if (bgm.paused) {
       await bgm.play()
@@ -367,42 +324,80 @@ if (heroSection) heroObserver.observe(heroSection)
     }
   })
 
+  // ============================================================
+  // FIX 1: Victory Overlay — Close Button
+  // ============================================================
+  document.getElementById('victoryClose')?.addEventListener('click', () => {
+    document.getElementById('victoryOverlay')?.classList.remove('show')
+  })
+
+  // ============================================================
+  // FIX 2: Sticky Boss HP Bar
+  // ============================================================
+  const stickyBoss   = document.getElementById('stickyBoss')
+  const stickyHpFill = document.getElementById('stickyHpFill')
+  const stickyHpText = document.getElementById('stickyHpText')
+
+  // Show sticky bar only after user scrolls past the hero section
+  const heroSection = document.querySelector('.hero')
+  if (heroSection && stickyBoss) {
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          stickyBoss.classList.remove('hidden')
+        } else {
+          stickyBoss.classList.add('hidden')
+        }
+      })
+    }, { threshold: 0.1 })
+    heroObserver.observe(heroSection)
+  }
+
   // --- Scroll Boss HP + Dialog + Rage ---
   const bossHpFill = document.getElementById('bossHpFill')
   const bossHpText = document.getElementById('bossHpText')
   const bossDialog = document.getElementById('bossDialog')
 
   const dialogs = [
-    { at: 0, text: '"Kau tak akan lolos dari Ancol..."' },
+    { at: 0,   text: '"Kau tak akan lolos dari Ancol..."' },
     { at: 0.2, text: '"Aku mulai tertarik..."' },
     { at: 0.4, text: '"Kekuatanmu meningkat..."' },
     { at: 0.6, text: '"Mustahil..."' },
     { at: 0.8, text: '"Tidak... ini belum berakhir..."' },
   ]
-  let lastDialogIdx = -1
-  let rageTriggered = false
-  let rageTextEl = null
+
+  let lastDialogIdx  = -1
+  let rageTriggered  = false
+  let rageTextEl     = null
 
   function triggerRage() {
     if (rageTriggered) return
     rageTriggered = true
 
     setTimeout(() => {
-      bossHpFill.classList.add('rage')
-      bossHpFill.style.width = '50%'
+      bossHpFill?.classList.add('rage')
+      bossHpFill && (bossHpFill.style.width = '50%')
+      stickyHpFill?.classList.add('rage')
+      stickyHpFill && (stickyHpFill.style.width = '50%')
       comboBlast('RAGE MODE')
     }, 500)
 
     setTimeout(() => {
-      bossHpFill.classList.remove('rage')
-      bossHpFill.classList.add('rage-red')
-      bossHpFill.style.width = '15%'
+      bossHpFill?.classList.remove('rage')
+      bossHpFill?.classList.add('rage-red')
+      bossHpFill && (bossHpFill.style.width = '15%')
+      stickyHpFill?.classList.remove('rage')
+      stickyHpFill?.classList.add('rage-red')
+      stickyHpFill && (stickyHpFill.style.width = '15%')
     }, 3000)
 
     setTimeout(() => {
-      bossHpFill.classList.remove('rage-red')
-      bossHpFill.classList.add('rage-dead')
-      bossHpFill.style.width = '3%'
+      bossHpFill?.classList.remove('rage-red')
+      bossHpFill?.classList.add('rage-dead')
+      bossHpFill && (bossHpFill.style.width = '3%')
+      stickyHpFill?.classList.remove('rage-red')
+      stickyHpFill?.classList.add('rage-dead')
+      stickyHpFill && (stickyHpFill.style.width = '3%')
     }, 5500)
 
     rageTextEl = document.createElement('div')
@@ -416,14 +411,19 @@ if (heroSection) heroObserver.observe(heroSection)
   }
 
   window.addEventListener('scroll', () => {
-    const max = document.documentElement.scrollHeight - window.innerHeight
+    const max      = document.documentElement.scrollHeight - window.innerHeight
     const progress = Math.min(window.scrollY / max, 1)
 
-    // HP drain
-    if (bossHpFill && bossHpText && !rageTriggered) {
-      const hp = Math.max(0, 1000000 - Math.floor(1000000 * progress))
-      bossHpFill.style.width = (1 - progress) * 100 + '%'
-      bossHpText.textContent = hp.toLocaleString() + ' HP'
+    // HP drain — main boss UI + sticky bar
+    if (!rageTriggered) {
+      const hp       = Math.max(0, 1000000 - Math.floor(1000000 * progress))
+      const widthPct = (1 - progress) * 100 + '%'
+      const hpLabel  = hp.toLocaleString() + ' HP'
+
+      if (bossHpFill) bossHpFill.style.width = widthPct
+      if (bossHpText) bossHpText.textContent  = hpLabel
+      if (stickyHpFill) stickyHpFill.style.width = widthPct
+      if (stickyHpText) stickyHpText.textContent  = hpLabel
     }
 
     // Dialog
@@ -467,29 +467,27 @@ if (heroSection) heroObserver.observe(heroSection)
   if (fogCanvas) {
     const fctx = fogCanvas.getContext('2d')
     function resizeFog() {
-      fogCanvas.width = window.innerWidth
+      fogCanvas.width  = window.innerWidth
       fogCanvas.height = window.innerHeight
     }
     resizeFog()
     window.addEventListener('resize', resizeFog)
-
     const fogPixels = Array.from({ length: 120 }, () => ({
-      x: Math.random() * fogCanvas.width,
-      y: Math.random() * fogCanvas.height,
-      size: Math.random() * 6 + 2,
+      x:      Math.random() * fogCanvas.width,
+      y:      Math.random() * fogCanvas.height,
+      size:   Math.random() * 6 + 2,
       speedX: (Math.random() - 0.5) * 0.3,
       speedY: (Math.random() - 0.5) * 0.15,
-      alpha: Math.random() * 0.03 + 0.01,
-      color: ['rgba(255,0,255,', 'rgba(0,212,255,', 'rgba(255,255,255,'][Math.floor(Math.random() * 3)]
+      alpha:  Math.random() * 0.03 + 0.01,
+      color:  ['rgba(255,0,255,', 'rgba(0,212,255,', 'rgba(255,255,255,'][Math.floor(Math.random() * 3)]
     }))
-
     function animateFog() {
       fctx.clearRect(0, 0, fogCanvas.width, fogCanvas.height)
       fogPixels.forEach(p => {
         p.x += p.speedX
         p.y += p.speedY
-        if (p.x < -10) p.x = fogCanvas.width + 10
-        if (p.x > fogCanvas.width + 10) p.x = -10
+        if (p.x < -10) p.x = fogCanvas.width  + 10
+        if (p.x > fogCanvas.width  + 10) p.x = -10
         if (p.y < -10) p.y = fogCanvas.height + 10
         if (p.y > fogCanvas.height + 10) p.y = -10
         fctx.fillStyle = p.color + p.alpha + ')'
@@ -503,10 +501,9 @@ if (heroSection) heroObserver.observe(heroSection)
   // --- CTA clicks ---
   document.querySelector('.badge.boss-cta')?.addEventListener('click', e => {
     e.preventDefault()
-    const msg = lang === 'id'
+    showToast(lang === 'id'
       ? '🔗 Akan tersedia setelah aplikasi dipublikasikan.'
-      : '🔗 Available once the app is published.'
-    showToast(msg)
+      : '🔗 Available once the app is published.')
   })
 
   document.getElementById('victoryCta')?.addEventListener('click', e => {
