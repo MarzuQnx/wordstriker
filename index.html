@@ -73,6 +73,14 @@
     </div>
   </nav>
 
+  <div id="stickyBoss" class="sticky-boss hidden">
+  <span class="sticky-boss-label">👹 SI MANIS</span>
+  <div class="sticky-boss-bar">
+    <div class="sticky-boss-fill" id="stickyHpFill"></div>
+  </div>
+  <span class="sticky-boss-hp" id="stickyHpText">1,000,000 HP</span>
+</div>
+
   <section class="hero">
     <div class="hero-bg layer layer-back"></div>
     <div class="hero-glow layer layer-mid"></div>
@@ -246,12 +254,17 @@
   </footer>
 
   <div id="victoryOverlay" class="victory-overlay">
-    <div class="victory-box">
-      <h1>⚔️ SI MANIS DEFEATED</h1>
-      <p>The battle has ended. Will you continue your journey?</p>
-      <a href="#" class="badge google-play" id="victoryCta">DOWNLOAD NOW</a>
-    </div>
+  <div class="victory-box">
+    <button class="victory-close" id="victoryClose">✕</button>
+
+    <h1>⚔️ SI MANIS DEFEATED</h1>
+    <p>Congratulations. Only a small percentage of players ever reach this screen.</p>
+
+    <a href="#" class="badge google-play" id="victoryCta">
+      CONTINUE THE JOURNEY
+    </a>
   </div>
+</div>
 
   <div id="comboExplosion"></div>
   <div id="liveFeed"></div>
