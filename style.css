@@ -223,7 +223,7 @@ body {
 /* --- Weapon Discovery (Hero) --- */
 .weapon-discovery {
   position: absolute;
-  top: 40%;
+  top: 20%;
   left: 50%;
   transform: translateX(-50%);
   color: #ffd700;
